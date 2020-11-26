@@ -15,6 +15,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Home  from './pages/Home';
 // import Eventos  from './pages/Eventos';
+import Turmas from './pages/Turmas';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Autenticado = () => {
@@ -43,6 +44,7 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown : false }}>
+      <Stack.Screen name="Turmas" component={Turmas} />
         <Stack.Screen name="Login" component={Login} />
         <Drawer.Screen name="Register" component={Register} />
         <Stack.Screen name="Autenticado" component={Autenticado} />
