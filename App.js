@@ -16,6 +16,7 @@ import Register from './pages/Register';
 import Home  from './pages/Home';
 // import Eventos  from './pages/Eventos';
 import Turmas from './pages/Turmas';
+import Objetivos from './pages/Objetivos';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Autenticado = () => {
@@ -25,7 +26,7 @@ const Autenticado = () => {
         <Drawer.Screen name="Logout" component={Logout} />
         {/* <Drawer.Screen name="Eventos" component={Eventos} /> */}
     </Drawer.Navigator>
-  )
+  ) 
 }
 
 const Logout = ( {navigation} ) => {
@@ -44,8 +45,10 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown : false }}>
+      <Stack.Screen name="Objetivos" component={Objetivos} />
       <Stack.Screen name="Turmas" component={Turmas} />
         <Stack.Screen name="Login" component={Login} />
+        
         <Drawer.Screen name="Register" component={Register} />
         <Stack.Screen name="Autenticado" component={Autenticado} />
       </Stack.Navigator>
