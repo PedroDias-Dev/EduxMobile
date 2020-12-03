@@ -88,6 +88,7 @@ import {FontAwesome5} from '@expo/vector-icons'
 
 // Paginas
 import Login from './pages/Login';
+import Objetivos from './pages/Objetivos';
 // import Register from './pages/Register';
 import Postagens from './pages/Postagens';
 // import Home  from './pages/Home (Ranking)';
@@ -109,7 +110,10 @@ export default function App() {
                     iconName = 'school';
                   } else if (route.name === 'Turmas') {
                     iconName =  'graduation-cap';
+                  }else if (route.name === 'Objetivos') {
+                    iconName = 'graduation-cap';
                   }
+
                   // else if (route.name === 'Home') {
                   //   iconName = 'chalkboard-teacher';
                   // }
@@ -132,6 +136,8 @@ export default function App() {
           }>
           <Tab.Screen name="Postagens" component={Postagens} />
           <Tab.Screen name="Turmas" component={Turmas} />
+          <Tab.Screen name="Objetivos" component={Objetivos} />
+
           {/* <Tab.Screen name="Home" component={Home} /> */}
 
         </Tab.Navigator>
