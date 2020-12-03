@@ -3,6 +3,8 @@ import React, { useState } from "react";
 import {Alert,Modal,StyleSheet,Text,TouchableHighlight, View, SectionList, ViewBase} from "react-native";
 import { color } from "react-native-reanimated";
 
+
+
 const Turmas = () => {
   const [modalVisible, setModalVisible] = useState(false);
   return (

@@ -8,6 +8,7 @@
     "eject": "expo eject"
   },
   "dependencies": {
+    "@expo-google-fonts/titillium-web": "^0.1.0",
     "@react-native-async-storage/async-storage": "^1.13.2",
     "@react-native-community/masked-view": "0.1.10",
     "@react-navigation/bottom-tabs": "^5.11.2",
@@ -16,6 +17,7 @@
     "@react-navigation/stack": "^5.12.8",
     "bootstrap": "^4.5.3",
     "expo": "~39.0.2",
+    "expo-image-picker": "~9.1.1",
     "expo-status-bar": "~1.0.2",
     "react": "16.13.1",
     "react-bootstrap": "^1.4.0",
