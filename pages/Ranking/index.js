@@ -4,11 +4,6 @@ import TopBar from '../../components/TopBar';
 
 const Home = ({navigation}) => {
     let url = 'https://5f7f873fd6aabe00166f06be.mockapi.io/nyous/perfil'
-
-    const [perfil, SetPerfil] = useState([]);
-    const [nome, SetNome] = useState("");
-    const [pfp, SetPfp] = useState("");
-    const [turma, SetTurma] = useState("");
     
     const styles = StyleSheet.create({
         container: {
@@ -62,10 +57,14 @@ const Home = ({navigation}) => {
         },
         ranking: {
             flexDirection: 'column', 
-            textAlign: 'center', 
+			textAlign: 'center', 
             backgroundColor: '#9200D6' , 
-            borderRadius: 70,
-            padding: 20
+            borderRadius: 80,
+			padding: 20,
+			paddingLeft: 40,
+			paddingRight: 40,
+			alignItems: 'center'
+			
         },
         number : {
             fontSize: 30, 
@@ -74,10 +73,11 @@ const Home = ({navigation}) => {
             marginLeft: 8
         },
         bottomText : {
-            width: 100, 
+            width: 65, 
             color: 'white',
             fontFamily: 'TitilliumWeb_400Regular',
-            // marginBottom: 8
+			marginBottom: 8,
+			alignItems: 'center'
         }
 
       });
@@ -97,7 +97,7 @@ const Home = ({navigation}) => {
             </View>
 
             <View style={{marginTop: 50, }}>
-                <View style={{alignSelf: 'center'}}>
+                <View style={{alignSelf: 'center', alignItems: 'center'}}>
                     <View style={[styles.ranking, {backgroundColor: '#00D65F'}]}>
                         <Text style={styles.number}>3º</Text>
                         <Text style={{color: 'white'}}>3453</Text>
