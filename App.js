@@ -90,7 +90,7 @@ import {FontAwesome5} from '@expo/vector-icons'
 import Login from './pages/Login';
 // import Register from './pages/Register';
 import Postagens from './pages/Postagens';
-// import Home  from './pages/Home (Ranking)';
+import Ranking  from './pages/Ranking';
 // import Eventos  from './pages/Eventos';
 import Turmas from './pages/Turmas';
 //Navigation
@@ -105,14 +105,17 @@ export default function App() {
                 tabBarIcon: ({  color, size }) => {
                   let iconName;
 
-                  if (route.name === 'Postagens') {
+                  if (route.name === 'Ranking') {
                     iconName = 'school';
                   } else if (route.name === 'Turmas') {
                     iconName =  'graduation-cap';
                   }
-                  // else if (route.name === 'Home') {
-                  //   iconName = 'chalkboard-teacher';
-                  // }
+                      // else if (route.name === 'Objetivos') {
+                      //   iconName = 'chalkboard-teacher';
+                      // }
+                  else if (route.name === 'Postagens') {
+                    iconName = 'comment';
+                  }
                 
                   return <FontAwesome5 name={iconName} size={size} color={color} />;
                 },
@@ -130,10 +133,10 @@ export default function App() {
                 },
               }        
           }>
-          <Tab.Screen name="Postagens" component={Postagens} />
+          <Tab.Screen name="Ranking" component={Ranking} />
           <Tab.Screen name="Turmas" component={Turmas} />
-          {/* <Tab.Screen name="Home" component={Home} /> */}
-
+          {/* <Tab.Screen name="Home" component={Objetivos} /> */}
+          <Tab.Screen name="Postagens" component={Postagens} />
         </Tab.Navigator>
 
       </NavigationContainer>

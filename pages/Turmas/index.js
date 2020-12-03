@@ -53,7 +53,7 @@ const Turmas = () => {
             <Text style={styles.modalText}>O Ensino da Escola EduX é conhecida mundialmente!             Nós garantimos todos os anos escolares para os alunos. </Text>
 
             <TouchableHighlight
-              style={{ ...styles.openButton, backgroundColor: "#CBCDCB" }}
+              style={{ ...styles.openButton, backgroundColor: "#9200d6" }}
               onPress={() => {
                 setModalVisible(!modalVisible);
               }}
@@ -86,18 +86,16 @@ const styles = StyleSheet.create({
     fontSize: 40,
     marginTop:45,
     marginBottom: 2,
-    backgroundColor: '#B1B1B1',
+    backgroundColor: '#9200d6',
     color: "white",
     borderRadius: 65,
-
-
   },
 
  
   container: {
     flex: 1,
     marginBottom:27,
-    backgroundColor:"#F1F0F1",
+    backgroundColor:"white",
     marginLeft:20,
     marginRight:20
    },
@@ -126,7 +124,7 @@ const styles = StyleSheet.create({
   },
   modalView: {
     margin: 20,
-    backgroundColor:'#F1F0F1',
+    backgroundColor:'white',
     borderRadius: 20,
     padding: 35,
     alignItems: "center",
@@ -140,7 +138,7 @@ const styles = StyleSheet.create({
     elevation: 5
   },
   openButton: {
-    backgroundColor: "#CBCDCB",
+    backgroundColor: "#9200d6",
     borderRadius: 65,
     padding: 12,
     elevation: 2,
