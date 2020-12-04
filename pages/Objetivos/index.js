@@ -1,28 +1,32 @@
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, View, SectionList, TouchableHighlight, _renderTabs } from 'react-native';
-import { Card, ListItem, Button, Divider } from 'react-native-elements'
+import { Card, ListItem, } from 'react-native-elements'
 
 const Objetivos = () => {
 
     const [modalVisible, setModalVisible] = useState(false);
+    const [obj, setObj] = useState([])
 
-    const obj = [
-        {
-            name: 'Entregar Todas as Lições'
-        },
-        {
-            name: 'Conquistar nota igual ou maior que 7'
-        }
+    useEffect(() => {
+        listar();
+    }, [])
 
-    ]
+    let url = 'https://192.168.0.20:5000/api/objetivos';
 
-    const Item = ({ title }) => (
-        <View style={styles.item}>
-            <Text style={styles.title}>{title}</Text>
+    const listar = () => {
+        fetch(url, {
+          method: 'GET'
+        })
+        .then(response => response.json())
+        .then(dados => {
+            setObj((dados.data));
+            limparCampos();
+        })
+        .catch(err => console.log(err))
+      }
 
-        </View>
-    );
+
 
     return (
         <View style={styles.body}>
