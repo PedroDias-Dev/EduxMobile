@@ -62,11 +62,6 @@ const Postagens = ( {navigation} ) => {
         }
     };
 
-    //AUTOMATIC SCROLL
-    const myRef = useRef(null)
-    const scrollToRef = (ref) => window.scrollTo(0, ref.current.offsetTop)
-    const executeScroll = () => scrollToRef(myRef)
-
     //NOME DE USUARIO
     // const token = localStorage.getItem('token-edux');
 
@@ -156,7 +151,6 @@ const Postagens = ( {navigation} ) => {
                 // setImage(null);
                 // setDescricao("");
                 limparCampos();
-                text = ""
             })
             .catch(err => console.error(err))
         }
@@ -242,23 +236,9 @@ const Postagens = ( {navigation} ) => {
         
     }
 
-    function EditarRemover(item){
-
-        if((jwt_decode(token).nameid) === item.nomeUser){
-            return(
-                <div style={{justifyContent: 'space-around'}}>
-                <Button type="button" variant="warning" value={item.id} onClick={ event => editar(event)}>Editar</Button>
-                <Button type="button" variant="danger" value={item.id} style={{ marginLeft : '30px'}} onClick={ event => remover(event)}>Remover</Button>
-                </div>
-        )
-        }
-    }
-
     const renderItem = ({ item }) => (
         <ItemPost descricao={item.descricao} imagem={item.urlImagem} curtidas={item.curtidas} data={item.data} id={item.id} nomeUser={item.nomeUser}/>
       );
-
-    //   const Tab = createBottomTabNavigator();
 
       const styles = StyleSheet.create({
         container: {
