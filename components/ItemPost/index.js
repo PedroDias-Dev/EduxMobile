@@ -1,8 +1,10 @@
-import React, {useEffect, useState} from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity, Linking, Button } from 'react-native';
-import { Icon } from 'react-native-elements';
+// PROJETO EDUX
+// 11 E 12/2020
+// PEDRO
 
-import { LinearGradient } from 'expo';
+import React, {useEffect, useState} from 'react';
+import { StyleSheet, Text, View, Image, TouchableOpacity} from 'react-native';
+import { Icon } from 'react-native-elements';
 
 const styles = StyleSheet.create({
     container: {
@@ -32,8 +34,10 @@ const styles = StyleSheet.create({
 
 const ItemPost = (posts) => {
     
-
     const {descricao, imagem, curtidas, data, id, nomeUser} = posts;
+
+    //valor de curtidas reserva para update
+    const [curtidass, setCurtidass] = useState(curtidas)
 
     let url = 'https://5f7f873fd6aabe00166f06be.mockapi.io/nyous/edux'
 
@@ -60,7 +64,7 @@ const ItemPost = (posts) => {
         .then(response => response.json())
         .then(dado => {
             // console.log(dado);
-            // console.log(dado.curtidas)
+            console.log(dado.curtidas)
 
             var curtidas = Number(dado.curtidas);
 
@@ -83,10 +87,10 @@ const ItemPost = (posts) => {
             })
             .then(response => response.json())
             .then(dadoS => {
-            // console.log(dadoS.curtidas)
-
-            // listarPosts();
-            window.location.reload(false);
+                console.log(dadoS)
+                console.log(curtidas)
+                //atualiza o valor das curtidas sem reload da pagina
+                setCurtidass(dadoS.curtidas)
         })
         })
 
@@ -117,14 +121,10 @@ const ItemPost = (posts) => {
                                     name='heart'
                                     type='font-awesome'
                                     color='#00C2EE'
-                                    // reverseColor='true'
                                 />
                             </TouchableOpacity>
-                            <Text style={{color:"#00C2EE", marginLeft: 15, fontSize: 20, fontFamily: 'TitilliumWeb_400Regular'}}>{curtidas}</Text>
-                            {/* <Text style={{color:"blue", marginLeft: 15, fontSize: 20}}>3567</Text> */}
+                            <Text style={{color:"#00C2EE", marginLeft: 15, fontSize: 20, fontFamily: 'TitilliumWeb_400Regular'}}>{curtidass}</Text>
                         </View>
-
-                            {/* <Text style={{color:"blue"}}>22/11/2020</Text> */}
                             <Text style={{color:"#00C2EE", fontFamily: 'TitilliumWeb_400Regular'}}>{data}</Text>
                     </View>
                 </View>

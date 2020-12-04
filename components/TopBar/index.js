@@ -1,5 +1,9 @@
+// PROJETO EDUX
+// 11 E 12/2020
+// PEDRO
+
 import React, {useEffect} from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity, Button, Alert } from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableOpacity, Button, Alert, SafeAreaView } from 'react-native';
 // import { Icon } from 'react-native-elements'
 
 import imgSair from '../../assets/img/Vector.png'
@@ -30,7 +34,7 @@ const TopBar = ({ navigation }) => {
     };
 
     return(
-        <View style={{backgroundColor: '#9200D6', height: 45, justifyContent: 'center', marginTop: 34}}>
+        <View style={{backgroundColor: '#9200D6', height: 45, justifyContent: 'center', marginTop: 31}}>
             <View style={{flexDirection: 'row', justifyContent: 'space-between', margin: 17}}>
                 <Text style={{color: 'white', fontFamily: 'TitilliumWeb_900Black'}}>EDUX</Text>
                 <TouchableOpacity

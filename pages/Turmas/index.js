@@ -1,3 +1,7 @@
+// PROJETO EDUX
+// 11 E 12/2020
+// MILENA
+
 import { apisAreAvailable } from "expo";
 import React, { useState } from "react";
 import {Alert,Modal,StyleSheet,Text,TouchableHighlight, View, SectionList, ViewBase} from "react-native";

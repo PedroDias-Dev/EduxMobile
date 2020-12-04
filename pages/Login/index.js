@@ -1,3 +1,7 @@
+// PROJETO EDUX
+// 11 E 12/2020
+// PEDRO
+
 import React, {useState} from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, Image, Linking } from 'react-native';
 
@@ -43,7 +47,6 @@ const Login = ( {navigation} ) => {
                 
                 salvar(data.token);
                 navigation.push('Autenticado');
-                // navigation.push('Postagens');
             // }else{
             //     alert('Email ou senha inválidos! :( ');
             
@@ -99,7 +102,6 @@ const Login = ( {navigation} ) => {
 const styles = StyleSheet.create({
     container: {
       flex: 1,
-    //   backgroundColor: '#fff',
       backgroundColor: '#9200D6',
       alignItems: 'center',
       justifyContent: 'center',

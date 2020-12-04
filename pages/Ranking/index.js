@@ -1,9 +1,12 @@
+// PROJETO EDUX
+// 11 E 12/2020
+// TODOS
+
 import React, {useEffect, useState} from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity, Button, Alert } from 'react-native';
 import TopBar from '../../components/TopBar';
 
 const Home = ({navigation}) => {
-    let url = 'https://5f7f873fd6aabe00166f06be.mockapi.io/nyous/perfil'
     
     const styles = StyleSheet.create({
         container: {
@@ -59,7 +62,7 @@ const Home = ({navigation}) => {
             flexDirection: 'column', 
 			textAlign: 'center', 
             backgroundColor: '#9200D6' , 
-            borderRadius: 80,
+            borderRadius: 90,
 			padding: 20,
 			paddingLeft: 40,
 			paddingRight: 40,
@@ -88,9 +91,13 @@ const Home = ({navigation}) => {
 
             <View style={{alignSelf: 'center', flexDirection:"row", justifyContent: 'center', backgroundColor: '#9200D6', borderRadius:30, marginTop: 30}}>
                 <View style={{flexDirection:"row", justifyContent: 'center'}}>
-                    <Image source="https://avatars2.githubusercontent.com/u/61596627?s=460&u=a732711476392ccc25786fb308203dcf21e85ed5&v=4" style={{width:60, height:60, borderRadius:30 }} />
+                    <Text style={{fontFamily: 'TitilliumWeb_300Light_Italic', fontSize: 10, width: 40, alignSelf: 'center', color: 'white', marginLeft: 20}}>Sem imagem</Text>
+
+                    {/* imagem de perfil */}
+                    {/* <Image source="https://avatars2.githubusercontent.com/u/61596627?s=460&u=a732711476392ccc25786fb308203dcf21e85ed5&v=4" style={{width:60, height:60, borderRadius:30 }} /> */}
+                    
                     <View style={{alignSelf: 'center', padding: 9, marginRight: 15}}>
-                        <Text style={{fontFamily: 'TitilliumWeb_700Bold', color: 'white'}}>Paulinho Gamer 2007</Text>
+                        <Text style={{fontFamily: 'TitilliumWeb_700Bold', color: 'white'}}>Pedro Dias</Text>
                         <Text style={{fontSize: 10, fontFamily: 'TitilliumWeb_400Regular', color: 'white'}}>2 - Desenvolvimento de Sistemas</Text>
                     </View>
                 </View>
@@ -100,30 +107,30 @@ const Home = ({navigation}) => {
                 <View style={{alignSelf: 'center', alignItems: 'center'}}>
                     <View style={[styles.ranking, {backgroundColor: '#00D65F'}]}>
                         <Text style={styles.number}>3º</Text>
-                        <Text style={{color: 'white'}}>3453</Text>
+                        <Text style={{color: 'white'}}>34</Text>
                         <Text style={styles.bottomText}>Objetivos concluidos</Text>
                     </View>
                 </View>
 
                 <View style={{alignSelf: 'center', flexDirection: 'row', }}>
                     <View style={[styles.ranking, {marginRight: 70, backgroundColor: '#00C2EE'}]}>
-                        <Text style={styles.number}>3º</Text>
-                        <Text style={{color: 'white'}}>3453</Text>
-                        <Text style={styles.bottomText}>Objetivos concluidos</Text>
+                        <Text style={styles.number}>1º</Text>
+                        <Text style={{color: 'white'}}>17</Text>
+                        <Text style={styles.bottomText}>Postagens feitas</Text>
                     </View>
 
                     <View style={[styles.ranking, {backgroundColor: '#9200D6'}]}>
-                        <Text style={styles.number}>3º</Text>
-                        <Text style={{color: 'white'}}>3453</Text>
-                        <Text style={styles.bottomText}>Objetivos concluidos</Text>
+                        <Text style={styles.number}>5º</Text>
+                        <Text style={{color: 'white'}}>20</Text>
+                        <Text style={styles.bottomText}>Desafios concluidos</Text>
                     </View>
                 </View>
 
                 <View style={{alignSelf: 'center'}}>
                     <View style={[styles.ranking, {backgroundColor: '#FF271C'}]}>
-                        <Text style={styles.number}>3º</Text>
-                        <Text style={{color: 'white'}}>3453</Text>
-                        <Text style={styles.bottomText}>Objetivos concluidos</Text>
+                        <Text style={styles.number}>8º</Text>
+                        <Text style={{color: 'white'}}>3</Text>
+                        <Text style={styles.bottomText}>Notas máximas</Text>
                     </View>
                 </View>
             </View>

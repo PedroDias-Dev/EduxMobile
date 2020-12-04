@@ -1,3 +1,7 @@
+// PROJETO EDUX
+// 11 E 12/2020
+// PEDRO
+
 import React, {useState, useRef, useEffect} from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, Image, FlatList, Platform } from 'react-native';
 
@@ -8,7 +12,7 @@ import * as ImagePicker from 'expo-image-picker';
 
 const Postagens = ( {navigation} ) => {
     //let url = 'http://localhost:57332'
-    let url = 'https://5f7f873fd6aabe00166f06be.mockapi.io/nyous/edux'
+    // let url = 'https://5f7f873fd6aabe00166f06be.mockapi.io/nyous/edux'
 
     const [ id, setId] = useState(0);
     const [nome, setNome] = useState('');
@@ -27,16 +31,6 @@ const Postagens = ( {navigation} ) => {
     //IMAGE
     const [image, setImage] = useState(null);
 
-    // useEffect(() => {
-    //     (async () => {
-    //     if (Platform.OS !== 'web') {
-    //         const { status } = await ImagePicker.requestCameraRollPermissionsAsync();
-    //         if (status !== 'granted') {
-    //         alert('Sorry, we need camera roll permissions to make this work!');
-    //         }
-    //     }
-    //     })();
-    // }, []);
     const pickImage = async () => {
         (async () => {
             if (Platform.OS !== 'web') {
@@ -63,14 +57,14 @@ const Postagens = ( {navigation} ) => {
     };
 
     //NOME DE USUARIO
-    // const token = localStorage.getItem('token-edux');
+    const token = localStorage.getItem('token-edux');
 
-    // const SetNomeUser = () =>{
-    //     //const token = localStorage.getItem('token-edux');
-    //     setNomeUser((jwt_decode(token).nameid));
+    const SetNomeUser = () =>{
+        //const token = localStorage.getItem('token-edux');
+        setNomeUser((jwt_decode(token).nameid));
 
-    //     console.log(nomeUser);
-    // }
+        console.log(nomeUser);
+    }
 
 
     useEffect(() => {
@@ -115,7 +109,7 @@ const Postagens = ( {navigation} ) => {
     const salvar = (event) => {
         event.preventDefault();
 
-        // SetNomeUser();
+        SetNomeUser();
         if (descricao === ""){
             return(
                 alert("Não há texto na postagem...")
@@ -124,11 +118,10 @@ const Postagens = ( {navigation} ) => {
         else{
             const post = {
                 nome : nome,
-                urlImagem: image,
+                urlImagem: urlImagem,
                 link : link,
                 descricao : descricao,
-                // nomeUser: nomeUser,
-                nomeUser: 'Xxpedrinho_gamerxX',
+                nomeUser: nomeUser,
                 curtidas: 0
             }
     
@@ -139,8 +132,8 @@ const Postagens = ( {navigation} ) => {
                 method : method,
                 body : JSON.stringify(post),
                 headers : {
-                    'content-type' : 'application/json'
-                    // 'authorization' : 'Bearer' + localStorage.getItem('token-edux')
+                    'content-type' : 'application/json',
+                    'authorization' : 'Bearer' + localStorage.getItem('token-edux')
                 }
             })
             .then(response => response.json())
@@ -157,87 +150,8 @@ const Postagens = ( {navigation} ) => {
         
     }
 
-    const editar = (event) => {
-        event.preventDefault();
-        executeScroll();
-
-        console.log('A')
-
-        fetch(`${url}/${event.target.value}`, {
-            method : 'GET'
-        })
-        .then(response => response.json())
-        .then(dado => {
-            console.log(dado);
-
-            setId(dado.id);
-            setNome(dado.nome);
-            setLink(dado.link);
-            setUrlImagem(dado.urlImagem);
-            setDescricao(dado.descricao);
-        })
-    }
-
-    const remover = (event) => {
-        event.preventDefault();
-
-        fetch(`${url}/${event.target.value}`,{
-            method : 'DELETE',
-            // headers : {
-            //     'authorization' : 'Bearer' + localStorage.getItem('token-edux')
-            // }
-        })
-        .then(response => response.json())
-        .then(dados => {
-            alert('Post Apagado com sucesso!');
-
-            listarPosts();
-        })
-    }
-
-    const likes = (event) => {
-        event.preventDefault();
-
-        fetch(`${url}/${event.target.value}`, {
-            method : 'GET'
-        })
-        .then(response => response.json())
-        .then(dado => {
-            console.log(dado);
-            console.log(dado.curtidas)
-
-            var curtidas = Number(dado.curtidas);
-
-
-            const post = {
-                nome : dado.nome,
-                urlImagem : dado.urlImagem,
-                link : dado.link,
-                descricao : dado.descricao,
-                nomeUser: dado.nomeUser,
-                curtidas: dado.curtidas + 1
-            }     
-
-            fetch(`${url}/${event.target.value}`, {
-                method : 'PUT',
-                body : JSON.stringify(post),
-                headers : {
-                    'content-type' : 'application/json'
-                }
-            })
-            .then(response => response.json())
-            .then(dadoS => {
-            console.log(dadoS.curtidas)
-
-            listarPosts();
-        })
-        })
-
-        
-    }
-
     const renderItem = ({ item }) => (
-        <ItemPost descricao={item.descricao} imagem={item.urlImagem} curtidas={item.curtidas} data={item.data} id={item.id} nomeUser={item.nomeUser}/>
+        <ItemPost descricao={item.descricao} imagem={item.urlImagem} curtidas={item.curtidas} data={item.data} id={item.id} nomeUser={item.nomeUser} />
       );
 
       const styles = StyleSheet.create({
@@ -284,6 +198,8 @@ const Postagens = ( {navigation} ) => {
         }
       });
 
+    //   const {posts} = this.state;
+
     return(
         <View >
             <View style={{backgroundColor: 'white'}}>
@@ -321,7 +237,7 @@ const Postagens = ( {navigation} ) => {
                 data={posts}
                 renderItem={renderItem}
                 keyExtractor={item => item.id}
-                style={{backgroundColor: 'white'}}
+                style={{backgroundColor: 'white', height: '64%'}}
             />
             
         </View>

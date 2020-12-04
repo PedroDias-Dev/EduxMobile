@@ -1,3 +1,6 @@
+// PROJETO EDUX
+// 11 E 12/2020
+// MAKOTO
 
 import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, View, SectionList, TouchableHighlight, _renderTabs } from 'react-native';

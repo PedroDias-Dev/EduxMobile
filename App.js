@@ -1,3 +1,6 @@
+// PROJETO EDUX
+// 11 E 12/2020
+
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { StyleSheet } from 'react-native';
