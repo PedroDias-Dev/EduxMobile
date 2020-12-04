@@ -2,17 +2,18 @@ import { apisAreAvailable } from "expo";
 import React, { useState } from "react";
 import {Alert,Modal,StyleSheet,Text,TouchableHighlight, View, SectionList, ViewBase} from "react-native";
 import { color } from "react-native-reanimated";
+import TopBar from "../../components/TopBar";
 
-const Turmas = () => {
+
+
+const Turmas = ({ navigation }) => {
   const [modalVisible, setModalVisible] = useState(false);
   return (
 
- 
-    
-    
     <View style={styles.container}>
-    
-    <Text style={styles.header }>     EduX - Turmas</Text>
+    <TopBar navigation={navigation} />
+
+    <Text style={styles.header }>Turmas</Text>
 
     <SectionList style={styles.mil}
       sections={[
@@ -86,9 +87,11 @@ const styles = StyleSheet.create({
     fontSize: 40,
     marginTop:45,
     marginBottom: 2,
-    backgroundColor: '#9200d6',
-    color: "white",
+    color: "#9200d6",
+    textAlign: "center",
     borderRadius: 65,
+    fontWeight: "bold",
+    fontFamily: 'TitilliumWeb_400Regular'
   },
 
  
@@ -96,8 +99,8 @@ const styles = StyleSheet.create({
     flex: 1,
     marginBottom:27,
     backgroundColor:"white",
-    marginLeft:20,
-    marginRight:20
+    // marginLeft:20,
+    // marginRight:20
    },
    
    sectionHeader: {

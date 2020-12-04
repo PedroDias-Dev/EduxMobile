@@ -2,11 +2,29 @@
 import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, View, SectionList, TouchableHighlight, _renderTabs } from 'react-native';
 import { Card, ListItem, } from 'react-native-elements'
+import TopBar from "../../components/TopBar";
 
-const Objetivos = () => {
+const Objetivos = ({ navigation }) => {
 
     const [modalVisible, setModalVisible] = useState(false);
-    const [obj, setObj] = useState([])
+
+    const list = [
+        {
+            name: 'Principais',
+           
+            subtitle: 'Entregar todas as atividades',
+
+            subtitle: 'Participar das aulas',
+            
+            subtitle: 'Comparecer em todas as aulas'
+        },
+        {
+            name: 'Secundários',
+            
+            subtitle: 'Concluir todos os objetivos principais'
+        },
+    ]
+
 
     useEffect(() => {
         listar();
@@ -16,72 +34,60 @@ const Objetivos = () => {
 
     const listar = () => {
         fetch(url, {
-          method: 'GET'
+            method: 'GET'
         })
-        .then(response => response.json())
-        .then(dados => {
-            setObj((dados.data));
-            limparCampos();
-        })
-        .catch(err => console.log(err))
-      }
+            .then(response => response.json())
+            .then(dados => {
+                setObj((dados.data));
+                limparCampos();
+            })
+            .catch(err => console.log(err))
+    }
 
 
 
     return (
         <View style={styles.body}>
+            <TopBar navigation={navigation} />
 
-            <View style={styles.container}>
+            <Text style={styles.header}> Objetivos</Text>
 
-                <Text style={styles.header}> Objetivos</Text>
-
-                <SectionList style={styles.mil}
-                    sections={[
-                        {
-                            title: 'Objetivos principais',
-                            data:
-                                [' • Entregar todas as lições',
-                                    ' • Conquistar nota igual ou maior que 7',
-                                    ' • Comparecer em todas as aulas'
-                                ]
-                        },
-
-                    ]}
-                    renderItem={({ item }) => <Text style={styles.item}>{item}</Text>}
-                    renderSectionHeader={({ section }) => <Text style={styles.sectionHeader}>{section.title}</Text>}
-                    keyExtractor={(index) => index} />
-
-                <Card containerStyle={{ padding: 10, borderRadius: 20, borderBottomLeftRadius: 20, borderTopRightRadius: 20 }} >
-                    <Card.Title>
-                        OBJETIVOS CONCLUÍDOS
-                    </Card.Title>
+            <SectionList style={styles.mil}
+                sections={[
                     {
-                        obj.map((u, i) => {
-                            return (
-                                <ListItem
-                                    key={i}
-                                    title={u.name}
-                                />
-                            );
-                        })
-                    }
+                        title: 'Principais',
+                        data: [' • Comparecer em todas as aulas',
+                            ' • Entregar todas as atividades',
+                            ' • Participar das aulas',
+                        ]
+                    },
+                    {
+                        title: 'Secundários ',
+                        data: [' • Concluir todos os objetivos principais', ]
+                    },
+                ]}
+                renderItem={({ item }) => <Text style={styles.item}>{item}</Text>}
+                renderSectionHeader={({ section }) => <Text style={styles.sectionHeader}>{section.title}</Text>}
+                keyExtractor={(item, index) => index}
+            />
 
-                </Card>
+            <Card containerStyle={{ padding: 10, borderRadius: 20, borderBottomLeftRadius: 20, borderTopRightRadius: 20 }} >
+                <Card.Title>
+                    OBJETIVOS CONCLUÍDOS
+                    </Card.Title>
+                {
+                    list.map((l, i) => (
+                        <ListItem key={i} bottomDivider>
+                            
+                            <ListItem.Content>
+                                <ListItem.Title>{l.name}</ListItem.Title>
+                                <ListItem.Subtitle>{l.subtitle}</ListItem.Subtitle>
+                            </ListItem.Content>
+                        </ListItem>
+                    ))
+                }
 
-                <View style={styles.centeredView}>
-
-                    <TouchableHighlight
-                        style={styles.openButton}
-                        onPress={() => {
-                            setModalVisible(true);
-                        }}
-                    >
-                        <Text style={styles.textStyle}>Veja mais!</Text>
-                    </TouchableHighlight>
-                </View>
-
-            </View>
-
+            </Card>
 
         </View>
 
@@ -95,17 +101,9 @@ const styles = StyleSheet.create({
         marginTop: 40,
         marginBottom: 2,
         textAlign: "center",
-        color: "black",
-        backgroundColor: "purple",
+        color: "#9200d6",
         fontWeight: "bold",
-        fontFamily: 'Titillium Web'
-    },
-    container: {
-        flex: 1,
-        backgroundColor: "purple",
-        marginBottom: 27,
-        marginLeft: 20,
-        marginRight: 20,
+        fontFamily: 'TitilliumWeb_400Regular'
     },
     sectionHeader: {
         paddingTop: 15,
