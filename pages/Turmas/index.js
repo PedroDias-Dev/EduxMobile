@@ -10,13 +10,10 @@ const Turmas = ({ navigation }) => {
   const [modalVisible, setModalVisible] = useState(false);
   return (
 
-    
-    
     <View style={styles.container}>
     <TopBar navigation={navigation} />
 
-    
-    <Text style={styles.header }>     EduX - Turmas</Text>
+    <Text style={styles.header }>Turmas</Text>
 
     <SectionList style={styles.mil}
       sections={[
@@ -90,9 +87,11 @@ const styles = StyleSheet.create({
     fontSize: 40,
     marginTop:45,
     marginBottom: 2,
-    backgroundColor: '#9200d6',
-    color: "white",
+    color: "#9200d6",
+    textAlign: "center",
     borderRadius: 65,
+    fontWeight: "bold",
+    fontFamily: 'TitilliumWeb_400Regular'
   },
 
  
