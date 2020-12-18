@@ -1,20 +1,15 @@
-// PROJETO EDUX
-// 11 E 12/2020
-// PEDRO
-
 import React, {useState} from 'react';
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, Image, Linking } from 'react-native';
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, Image } from 'react-native';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const Login = ( {navigation} ) => {
-    // let url = 'http://localhost:55718/api/Login';
-    let url = 'https://5f7f873fd6aabe00166f06be.mockapi.io/nyous/edux'
+const Register = ( {navigation} ) => {
+    let url = 'a';
 
-    // let url = 'http://192.168.0.132:55718/api/Login';
-
+    const [nome, setNome] = useState('');
     const [email, setEmail] = useState('');
     const [senha, setSenha] = useState('');
+    const [idPerfil, setIdPerfil] = useState('');
 
     const salvar = async (value) => {
         try {
@@ -40,16 +35,16 @@ const Login = ( {navigation} ) => {
         })
         .then(response => response.json())
         .then(data => {
-            console.log(data.token);
-            // if(data.status != 404){
-                alert('Seja bem vindx ao EduX!');
-                // console.log(data);
+            console.log(data);
+            if(data.status != 404){
+                alert('Seja bem vindx');
+                console.log(data.token);
                 
                 salvar(data.token);
                 navigation.push('Autenticado');
-            // }else{
-            //     alert('Email ou senha inválidos! :( ');
-            
+            }else{
+                alert('Email ou senha inválidos! :( ');
+            }
         })
 
     }
@@ -59,24 +54,34 @@ const Login = ( {navigation} ) => {
 
             {/* Logo Edux */}
 
-            <Text style={[styles.title, {marginBottom: 30}]}>EduX</Text>
+            <Text style={styles.title}>EduX</Text>
 
-            <Text style={[styles.title, {fontSize: 25, fontFamily: 'TitilliumWeb_700Bold'}]}>Login</Text>
+            <TextInput
+                style={styles.input}
+                onChangeText={text => setNome(text)}
+                value={nome}
+                placeholder="Nome de Usuário"
+            />
 
             <TextInput
                 style={styles.input}
                 onChangeText={text => setEmail(text)}
                 value={email}
-                placeholder="E-mail"
-                placeholderTextColor="#9200D6" 
+                placeholder="E-Mail"
             />
 
             <TextInput
-                style={[styles.input, {fontFamily: 'TitilliumWeb_400Regular'}]}
+                style={styles.input}
                 onChangeText={text => setSenha(text)}
                 value={senha}
                 placeholder="Senha"
-                placeholderTextColor="#9200D6" 
+                secureTextEntry={true}
+            />
+            <TextInput
+                style={styles.input}
+                onChangeText={text => setIdPerfil(text)}
+                value={idPerfil}
+                placeholder="Id de Perfil"
                 secureTextEntry={true}
             />
 
@@ -84,15 +89,14 @@ const Login = ( {navigation} ) => {
                 style={styles.button}
                 onPress={Logar}
             >
-                <Text style={styles.textButton}>Entrar</Text>
+                <Text style={styles.textButton}>REGISTRAR</Text>
             </TouchableOpacity>
 
             <TouchableOpacity
                 // style={styles.button}
-                // onPress={() => navigation.push('Register')}
-                onPress={() => Linking.openURL('eduX.com.br/register')}
+                onPress={() => navigation.push('Login')}
             >
-                <Text style={styles.text}>Não tenho uma conta</Text>
+                <Text style={styles.textb}>Já tenho uma conta</Text>
             </TouchableOpacity>
 
         </View>
@@ -102,54 +106,43 @@ const Login = ( {navigation} ) => {
 const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: '#9200D6',
+      backgroundColor: '#fff',
       alignItems: 'center',
       justifyContent: 'center',
-      fontFamily: 'TitilliumWeb_400Regular'
     },
     input : {
         width: '90%',
-        backgroundColor: 'white',
         height: 40, 
         borderColor: 'gray', 
         borderWidth: 1,
         marginTop : 20,
         padding: 5,
-        paddingLeft: 25,
-        borderRadius: 6,
-        marginBottom: 15,
-        fontFamily: 'TitilliumWeb_400Regular', 
-        color: '#9200D6'
+        borderRadius: 6
     },
     button : {
-        backgroundColor : 'white',
+        backgroundColor : 'black',
         width: '90%',
-        padding : 5,
+        padding : 10,
         borderRadius: 6,
         marginTop : 20,
         alignItems: 'center',
         justifyContent: 'center',
     },
     textButton : {
-        fontFamily: 'TitilliumWeb_900Black',
-        color : '#9200D6',
-        fontSize: 20
-    },
-    logo : {
-        width: 200,
-        height: 200,
-    },
-    text : {
-        fontFamily: 'TitilliumWeb_400Regular',
-        marginTop: 17,
-        color : '#00C2EE'
+        color : 'white'
     },
     title : {
-        fontFamily: 'TitilliumWeb_900Black',
+        fontFamily: 'Titillium Web',
         fontWeight: "900",
-        fontSize: 96,
-        color: 'white'
+        fontSize: 96
+    },
+    text : {
+        color : 'black'
+    },
+    textb : {
+        marginTop: 17,
+        color : 'black'
     }
   });
 
-export default Login;
+export default Register;

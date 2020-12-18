@@ -1,6 +1,10 @@
-import React, {useEffect} from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity, Linking } from 'react-native';
-import { Icon } from 'react-native-elements'
+// PROJETO EDUX
+// 11 E 12/2020
+// PEDRO
+
+import React, {useEffect, useState} from 'react';
+import { StyleSheet, Text, View, Image, TouchableOpacity} from 'react-native';
+import { Icon } from 'react-native-elements';
 
 const styles = StyleSheet.create({
     container: {
@@ -18,7 +22,9 @@ const styles = StyleSheet.create({
       flexDirection:'row',
       borderRadius:5,
       borderWidth: 2,
-      borderColor: 'blue'
+    //   borderColor: '#00C2EE' Azul claro
+    //   borderColor: '#341948'
+      borderColor: '#00C2EE'
     },
     descricao:{
       marginTop: 15,
@@ -26,37 +32,38 @@ const styles = StyleSheet.create({
     }
   });
 
-const ItemPost = (post) => {
-    useEffect(() => {
-        listarPosts();
-    }, []);
+const ItemPost = (posts) => {
+    
+    const {descricao, imagem, curtidas, data, id, nomeUser} = posts;
 
-    const {nome, imagem, descricao, curtida} = post;
+    //valor de curtidas reserva para update
+    const [curtidass, setCurtidass] = useState(curtidas)
 
     let url = 'https://5f7f873fd6aabe00166f06be.mockapi.io/nyous/edux'
 
-    const listarPosts = () => {
-        fetch(url, {
-          method: 'GET'
-        })
-        .then(response => response.json())
-        .then(dados => {
-          setPost(dados);
+    const imagemm = () =>{
+        if (imagem === "" ){
+            return(
+                <Text style={{alignSelf: 'center', marginTop: 5, fontFamily: 'TitilliumWeb_300Light_Italic'}}>Não há imagem </Text>
+            )
+        }
+        else{
+            return(
+                <Image source={{uri:imagem}}  style={{width:294, height:160,borderRadius:4}} />
+            );
+        }
+    };
 
-          console.log(dados);
-        })
-        .catch(err => console.log(err))
-      }
-
-    const likes = (event) => {
+    const likes = (event, id) => {
         event.preventDefault();
+        // console.log(event)
 
-        fetch(`${url}/${event.target.value}`, {
+        fetch(`${url}/${id}`, {
             method : 'GET'
         })
         .then(response => response.json())
         .then(dado => {
-            console.log(dado);
+            // console.log(dado);
             console.log(dado.curtidas)
 
             var curtidas = Number(dado.curtidas);
@@ -71,7 +78,7 @@ const ItemPost = (post) => {
                 curtidas: dado.curtidas + 1
             }     
 
-            fetch(`${url}/${event.target.value}`, {
+            fetch(`${url}/${id}`, {
                 method : 'PUT',
                 body : JSON.stringify(post),
                 headers : {
@@ -80,9 +87,10 @@ const ItemPost = (post) => {
             })
             .then(response => response.json())
             .then(dadoS => {
-            console.log(dadoS.curtidas)
-
-            listarPosts();
+                console.log(dadoS)
+                console.log(curtidas)
+                //atualiza o valor das curtidas sem reload da pagina
+                setCurtidass(dadoS.curtidas)
         })
         })
 
@@ -91,29 +99,36 @@ const ItemPost = (post) => {
 
     return (
         <View style={styles.listItem}>
-            <View style={{justifyContent: 'center'}}>
-                <Image source={{uri:imagem}}  style={{width:294, height:160,borderRadius:4}} />
+            
+                <View style={{justifyContent: 'center', alignSelf: 'center'}}>
 
-                <View style={styles.descricao}>
-                    {/* <Text style={{fontWeight:"bold"}}>{descricao}</Text> */}
-                    <Text style={{fontWeight:"bold", width: 290}}>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</Text>
-                </View>
-                
-                <View style={{alignItems:"center", flexDirection: 'row', justifyContent: 'space-between'}}>
-                    <View style={{height:50,width:100, alignItems:"center", flexDirection: 'row'}}>
-                        <TouchableOpacity >
-                        <Icon
-                            name='heart'
-                            type='font-awesome'
-                            onPress={likes} />
-                        </TouchableOpacity>
-                        {/* <Text style={{color:"blue", marginLeft: 15, fontSize: 20}}>{curtida}</Text> */}
-                        <Text style={{color:"blue", marginLeft: 15, fontSize: 20}}>3567</Text>
+                    {imagemm()}
+
+                    <View style={styles.descricao}>
+                        <Text style={{width: 290, fontFamily: 'TitilliumWeb_400Regular', color: '#323133'}}>{descricao}</Text>
+                        <Text style={{width: 290, fontFamily: 'TitilliumWeb_300Light_Italic', marginTop: 5}}>by {nomeUser}</Text>
+
                     </View>
+                    
+                    <View style={{alignItems:"center", flexDirection: 'row', justifyContent: 'space-between'}}>
+                        <View style={{height:50,width:100, alignItems:"center", flexDirection: 'row'}}>
+                            <TouchableOpacity 
+                            key={id}
+                            onPress={(e) => {likes(e, id)}}
+                            >
 
-                        <Text style={{color:"blue"}}>22/11/2020</Text>
+                                <Icon
+                                    name='heart'
+                                    type='font-awesome'
+                                    color='#00C2EE'
+                                />
+                            </TouchableOpacity>
+                            <Text style={{color:"#00C2EE", marginLeft: 15, fontSize: 20, fontFamily: 'TitilliumWeb_400Regular'}}>{curtidass}</Text>
+                        </View>
+                            <Text style={{color:"#00C2EE", fontFamily: 'TitilliumWeb_400Regular'}}>{data}</Text>
+                    </View>
                 </View>
-            </View>
+            
         </View>
     )
 }

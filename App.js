@@ -1,91 +1,15 @@
-// import { StatusBar } from 'expo-status-bar';
-// import React from 'react';
-// import { Button, StyleSheet, Text, View } from 'react-native';
+// PROJETO EDUX
+// 11 E 12/2020
 
-// import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-
-// // Navigations
-// import { createDrawerNavigator } from '@react-navigation/drawer';
-// import { createStackNavigator } from '@react-navigation/stack';
-// import { NavigationContainer } from '@react-navigation/native';
-
-// const Drawer = createDrawerNavigator();
-// const Stack  = createStackNavigator();
-
-// // Paginas
-// import Login from './pages/Login';
-// // import Register from './pages/Register';
-// import Postagens from './pages/Postagens';
-// import Home  from './pages/Home (Ranking)';
-// // import Eventos  from './pages/Eventos';
-// import Turmas from './pages/Turmas';
-
-// import AsyncStorage from '@react-native-async-storage/async-storage';
-
-// const Autenticado = () => {
-//   return(
-//     <Drawer.Navigator initialRouteName="Post">
-//         <Drawer.Screen name="Postagens" component={Postagens} />
-//         <Drawer.Screen name="Home" component={Home} />
-//         <Drawer.Screen name="Logout" component={Logout} />
-//     </Drawer.Navigator>
-//   )
-// }
-
-// const Logout = ( {navigation} ) => {
-//   return(
-//     <View>
-//       <Text>Deseja realmente sair da aplicação?</Text>
-//       <Button onPress={() => {
-//         AsyncStorage.removeItem('@jwt');
-//         navigation.push('Login');
-//       }} title="SAIR" ></Button>
-//     </View>
-//   )
-// }
-
-// // const Tab = createBottomTabNavigator();
-
-// // function BottomTab() {
-// //   return (
-// //     <Tab.Navigator>
-// //       <Tab.Screen name="Postagens" component={Postagens} />
-// //       <Tab.Screen name="Turmas" component={Turmas} />
-// //     </Tab.Navigator>
-// //   );
-// // }
-
-// export default function App() {
-//   return (
-//     <NavigationContainer>
-//       <Stack.Navigator screenOptions={{ headerShown : false }}>
-//         <Stack.Screen name="Postagens" component={Postagens} />
-//         <Stack.Screen name="Turmas" component={Turmas} />
-//         <Stack.Screen name="Login" component={Login} />
-//         {/* <Drawer.Screen name="Register" component={Register} /> */}
-//         <Stack.Screen name="Autenticado" component={Autenticado} />
-//       </Stack.Navigator>
-
-//     </NavigationContainer>
-//   );
-// }
-
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     backgroundColor: '#fff',
-//     alignItems: 'center',
-//     justifyContent: 'center',
-//   }
-// });
-
-
+import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import {FontAwesome5} from '@expo/vector-icons'
+import { StyleSheet } from 'react-native';
+import {TitilliumWeb_400Regular, TitilliumWeb_700Bold, TitilliumWeb_300Light_Italic, TitilliumWeb_900Black, useFonts} from '@expo-google-fonts/titillium-web';
+import { AppLoading } from 'expo';
+import { createDrawerNavigator } from '@react-navigation/drawer';
+import { createStackNavigator } from '@react-navigation/stack';
 
+<<<<<<< HEAD
 // Paginas
 import Login from './pages/Login';
 // import Register from './pages/Register';
@@ -96,12 +20,15 @@ import Turmas from './pages/Turmas';
 import Objetivos from './pages/Objetivos';
 import Alunos from './pages/Alunos'
 //Navigation
+=======
+const Drawer = createDrawerNavigator();
+const Stack  = createStackNavigator();
+>>>>>>> b8144639d824ea8081ad0cc9edfa33807872c6d6
 
-const Tab = createBottomTabNavigator();
+import TopBar from './components/TopBar'
 
-export default function App() {
-    return (
-      <NavigationContainer>
+const Autenticado = () => {
+  return(
         <Tab.Navigator
               screenOptions={({ route }) => ({
                 tabBarIcon: ({  color, size }) => {
@@ -111,10 +38,15 @@ export default function App() {
                     iconName = 'school';
                   } else if (route.name === 'Turmas') {
                     iconName =  'graduation-cap';
+                  }else if (route.name === 'Objetivos') {
+                    iconName = 'graduation-cap';
                   }
+<<<<<<< HEAD
                    else if (route.name === 'Objetivos') {
                     iconName = 'chalkboard-teacher';
                  }
+=======
+>>>>>>> b8144639d824ea8081ad0cc9edfa33807872c6d6
                   else if (route.name === 'Postagens') {
                     iconName = 'comment';
                   }
@@ -141,11 +73,48 @@ export default function App() {
           <Tab.Screen name="Ranking" component={Ranking} />
           <Tab.Screen name="Turmas" component={Turmas} />
           <Tab.Screen name="Objetivos" component={Objetivos} />
+<<<<<<< HEAD
+=======
+          {/* <Tab.Screen name="Home" component={Home} /> */}
+>>>>>>> b8144639d824ea8081ad0cc9edfa33807872c6d6
           <Tab.Screen name="Postagens" component={Postagens} />
           <Tab.Screen name="Alunos" component={Alunos} />
         </Tab.Navigator>
 
-      </NavigationContainer>
+  )
+}
 
-  );
+import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import {FontAwesome5} from '@expo/vector-icons'
+
+// Paginas
+import Login from './pages/Login';
+import Postagens from './pages/Postagens';
+import Ranking  from './pages/Ranking';
+import Turmas from './pages/Turmas';
+import Objetivos from './pages/Objetivos';
+//Navigation
+
+const Tab = createBottomTabNavigator();
+
+export default function App() {
+    let [fontsLoaded] = useFonts({
+      TitilliumWeb_400Regular,
+      TitilliumWeb_700Bold,
+      TitilliumWeb_300Light_Italic,
+      TitilliumWeb_900Black
+    });
+    if (!fontsLoaded){
+      return <AppLoading />
+    } 
+
+    return (
+      <NavigationContainer>
+        <Stack.Navigator screenOptions={{ headerShown : false }}>
+          <Stack.Screen name="Login" component={Login} />
+          <Stack.Screen name="Autenticado" component={Autenticado} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    );
 };

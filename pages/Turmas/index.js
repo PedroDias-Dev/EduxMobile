@@ -1,17 +1,35 @@
+// PROJETO EDUX
+// 11 E 12/2020
+// MILENA
+
 import { apisAreAvailable } from "expo";
 import React, { useState } from "react";
 import {Alert,Modal,StyleSheet,Text,TouchableHighlight, View, SectionList, ViewBase} from "react-native";
 import { color } from "react-native-reanimated";
+<<<<<<< HEAD
 import TopBar from '../../components/TopBar';
+=======
+import TopBar from "../../components/TopBar";
 
-const Turmas = () => {
+
+>>>>>>> b8144639d824ea8081ad0cc9edfa33807872c6d6
+
+const Turmas = ({ navigation }) => {
   const [modalVisible, setModalVisible] = useState(false);
   return (
+<<<<<<< HEAD
     
     <View style={styles.container}>
       <TopBar />
     
     <Text style={{fontSize: 40, alignSelf: 'center', marginTop: 10}}>Turmas</Text>
+=======
+
+    <View style={styles.container}>
+    <TopBar navigation={navigation} />
+
+    <Text style={styles.header }>Turmas</Text>
+>>>>>>> b8144639d824ea8081ad0cc9edfa33807872c6d6
 
     <SectionList style={styles.mil}
       sections={[
@@ -85,9 +103,11 @@ const styles = StyleSheet.create({
     fontSize: 40,
     marginTop:45,
     marginBottom: 2,
-    backgroundColor: '#9200d6',
-    color: "white",
+    color: "#9200d6",
+    textAlign: "center",
     borderRadius: 65,
+    fontWeight: "bold",
+    fontFamily: 'TitilliumWeb_400Regular'
   },
 
  
@@ -95,8 +115,8 @@ const styles = StyleSheet.create({
     flex: 1,
     marginBottom:27,
     backgroundColor:"white",
-    marginLeft:20,
-    marginRight:20
+    // marginLeft:20,
+    // marginRight:20
    },
    
    sectionHeader: {
