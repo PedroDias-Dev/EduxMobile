@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import { StyleSheet, Text, View, SectionList, TouchableHighlight, _renderTabs } from 'react-native';
 import { Card, ListItem, Button, Divider } from 'react-native-elements'
+import TopBar from '../../components/TopBar';
 
 const Objetivos = () => {
 
@@ -26,9 +27,9 @@ const Objetivos = () => {
 
     return (
         <View style={styles.body}>
-
+                <TopBar />
             <View style={styles.container}>
-
+                
                 <Text style={styles.header}> Objetivos</Text>
 
                 <SectionList style={styles.mil}

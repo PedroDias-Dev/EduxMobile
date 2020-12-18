@@ -2,17 +2,16 @@ import { apisAreAvailable } from "expo";
 import React, { useState } from "react";
 import {Alert,Modal,StyleSheet,Text,TouchableHighlight, View, SectionList, ViewBase} from "react-native";
 import { color } from "react-native-reanimated";
+import TopBar from '../../components/TopBar';
 
 const Turmas = () => {
   const [modalVisible, setModalVisible] = useState(false);
   return (
-
- 
-    
     
     <View style={styles.container}>
+      <TopBar />
     
-    <Text style={styles.header }>     EduX - Turmas</Text>
+    <Text style={{fontSize: 40, alignSelf: 'center', marginTop: 10}}>Turmas</Text>
 
     <SectionList style={styles.mil}
       sections={[

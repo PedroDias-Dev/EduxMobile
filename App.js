@@ -93,6 +93,8 @@ import Postagens from './pages/Postagens';
 import Ranking  from './pages/Ranking';
 // import Eventos  from './pages/Eventos';
 import Turmas from './pages/Turmas';
+import Objetivos from './pages/Objetivos';
+import Alunos from './pages/Alunos'
 //Navigation
 
 const Tab = createBottomTabNavigator();
@@ -110,10 +112,13 @@ export default function App() {
                   } else if (route.name === 'Turmas') {
                     iconName =  'graduation-cap';
                   }
-                      // else if (route.name === 'Objetivos') {
-                      //   iconName = 'chalkboard-teacher';
-                      // }
+                   else if (route.name === 'Objetivos') {
+                    iconName = 'chalkboard-teacher';
+                 }
                   else if (route.name === 'Postagens') {
+                    iconName = 'comment';
+                  }
+                  else if (route.name === 'Alunos') {
                     iconName = 'comment';
                   }
                 
@@ -135,8 +140,9 @@ export default function App() {
           }>
           <Tab.Screen name="Ranking" component={Ranking} />
           <Tab.Screen name="Turmas" component={Turmas} />
-          {/* <Tab.Screen name="Home" component={Objetivos} /> */}
+          <Tab.Screen name="Objetivos" component={Objetivos} />
           <Tab.Screen name="Postagens" component={Postagens} />
+          <Tab.Screen name="Alunos" component={Alunos} />
         </Tab.Navigator>
 
       </NavigationContainer>
