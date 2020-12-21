@@ -4,8 +4,13 @@
 
 import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, View, SectionList, TouchableHighlight, _renderTabs } from 'react-native';
+<<<<<<< HEAD
+import { Card, ListItem, Button, Divider } from 'react-native-elements'
+import TopBar from '../../components/TopBar';
+=======
 import { Card, ListItem, } from 'react-native-elements'
 import TopBar from "../../components/TopBar";
+>>>>>>> b8144639d824ea8081ad0cc9edfa33807872c6d6
 
 const Objetivos = ({ navigation }) => {
 
@@ -33,6 +38,45 @@ const Objetivos = ({ navigation }) => {
         listar();
     }, [])
 
+<<<<<<< HEAD
+    return (
+        <View style={styles.body}>
+                <TopBar />
+            <View style={styles.container}>
+                
+                <Text style={styles.header}> Objetivos</Text>
+
+                <SectionList style={styles.mil}
+                    sections={[
+                        {
+                            title: 'Objetivos principais',
+                            data:
+                                [' • Entregar todas as lições',
+                                    ' • Conquistar nota igual ou maior que 7',
+                                    ' • Comparecer em todas as aulas'
+                                ]
+                        },
+
+                    ]}
+                    renderItem={({ item }) => <Text style={styles.item}>{item}</Text>}
+                    renderSectionHeader={({ section }) => <Text style={styles.sectionHeader}>{section.title}</Text>}
+                    keyExtractor={(index) => index} />
+
+                <Card containerStyle={{ padding: 10, borderRadius: 20, borderBottomLeftRadius: 20, borderTopRightRadius: 20 }} >
+                    <Card.Title>
+                        OBJETIVOS CONCLUÍDOS
+                    </Card.Title>
+                    {
+                        obj.map((u, i) => {
+                            return (
+                                <ListItem
+                                    key={i}
+                                    title={u.name}
+                                />
+                            );
+                        })
+                    }
+=======
     let url = 'https://192.168.0.20:5000/api/objetivos';
 
     const listar = () => {
@@ -46,6 +90,7 @@ const Objetivos = ({ navigation }) => {
             })
             .catch(err => console.log(err))
     }
+>>>>>>> b8144639d824ea8081ad0cc9edfa33807872c6d6
 
 
 

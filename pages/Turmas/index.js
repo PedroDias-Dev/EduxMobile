@@ -6,18 +6,30 @@ import { apisAreAvailable } from "expo";
 import React, { useState } from "react";
 import {Alert,Modal,StyleSheet,Text,TouchableHighlight, View, SectionList, ViewBase} from "react-native";
 import { color } from "react-native-reanimated";
+<<<<<<< HEAD
+import TopBar from '../../components/TopBar';
+=======
 import TopBar from "../../components/TopBar";
 
 
+>>>>>>> b8144639d824ea8081ad0cc9edfa33807872c6d6
 
 const Turmas = ({ navigation }) => {
   const [modalVisible, setModalVisible] = useState(false);
   return (
+<<<<<<< HEAD
+    
+    <View style={styles.container}>
+      <TopBar />
+    
+    <Text style={{fontSize: 40, alignSelf: 'center', marginTop: 10}}>Turmas</Text>
+=======
 
     <View style={styles.container}>
     <TopBar navigation={navigation} />
 
     <Text style={styles.header }>Turmas</Text>
+>>>>>>> b8144639d824ea8081ad0cc9edfa33807872c6d6
 
     <SectionList style={styles.mil}
       sections={[
