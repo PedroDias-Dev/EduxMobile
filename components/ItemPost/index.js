@@ -33,13 +33,17 @@ const styles = StyleSheet.create({
   });
 
 const ItemPost = (posts) => {
+    const [postagensTotais, setPostagensTotais] = useState('');
+    const [curtidasTotais, setCurtidasTotais] = useState('');
     
-    const {descricao, imagem, curtidas, data, id, nomeUser} = posts;
+    const {descricao, imagem, curtidas, data, id, nomeUser, idUsuario} = posts;
+    // console.log(posts)
 
     //valor de curtidas reserva para update
     const [curtidass, setCurtidass] = useState(curtidas)
 
-    let url = 'https://5f7f873fd6aabe00166f06be.mockapi.io/nyous/edux'
+    // let url = 'https://5f7f873fd6aabe00166f06be.mockapi.io/nyous/edux'
+    let url = 'http://192.168.15.7:55718/api/Curtida';
 
     const imagemm = () =>{
         if (imagem === "" ){
@@ -56,43 +60,67 @@ const ItemPost = (posts) => {
 
     const likes = (event, id) => {
         event.preventDefault();
-        // console.log(event)
+        
+        let dica = id;
 
-        fetch(`${url}/${id}`, {
-            method : 'GET'
+        const curtida = {
+            idDica: dica
+        }
+
+        // fetch('http://localhost:5000/api/Curtida', {
+        fetch('http://192.168.15.7:55718/api/Curtida', {
+            method : 'POST',
+            body : JSON.stringify(curtida),
+            headers : {
+                'content-type' : 'application/json'
+                // 'authorization' : 'Bearer' + localStorage.getItem('token-edux')
+            }
         })
         .then(response => response.json())
-        .then(dado => {
-            // console.log(dado);
-            console.log(dado.curtidas)
+        .then(dados => {
 
-            var curtidas = Number(dado.curtidas);
+            setCurtidass(dados.totalCount)
 
-
-            const post = {
-                nome : dado.nome,
-                urlImagem : dado.urlImagem,
-                link : dado.link,
-                descricao : dado.descricao,
-                nomeUser: dado.nomeUser,
-                curtidas: dado.curtidas + 1
-            }     
-
-            fetch(`${url}/${id}`, {
-                method : 'PUT',
-                body : JSON.stringify(post),
-                headers : {
-                    'content-type' : 'application/json'
-                }
+            fetch(`http://localhost:5000/api/Usuario/${idUsuario}`, {
+                method : 'GET'
             })
             .then(response => response.json())
-            .then(dadoS => {
-                console.log(dadoS)
-                console.log(curtidas)
-                //atualiza o valor das curtidas sem reload da pagina
-                setCurtidass(dadoS.curtidas)
+            .then(dados => {
+                console.log(dados);
+
+                setPostagensTotais(Number(dados.postagensTotais) + 1);
+                setCurtidasTotais(dados.curtidasTotais);
+
+                console.log(curtidasTotais)
+                console.log(postagensTotais)
+
+                let conquistas = {
+                    idUsuario: idUsuario,
+                    postagensTotais: postagensTotais,
+                    curtidasTotais: curtidasTotais
+                }
+    
+                fetch(`http://localhost:5000/api/Usuario/${idUsuario}`, {
+                    method : 'PATCH',
+                    body : JSON.stringify(conquistas),
+                    headers : {
+                        'content-type' : 'application/json'
+                    }
+                })
+                .then(response => response.json())
+                .then(dadoss => {
+                    console.log(dadoss)
+                    console.log(postagensTotais)
+                    console.log('deu tudo certo meu lindo!')
+                });
+                alert('Post salvo com sucesso!');
+    
+                listarPosts();
+                
+            });
+
         })
-        })
+        .catch(err => console.error(err))
 
         
     }
@@ -106,7 +134,8 @@ const ItemPost = (posts) => {
 
                     <View style={styles.descricao}>
                         <Text style={{width: 290, fontFamily: 'TitilliumWeb_400Regular', color: '#323133'}}>{descricao}</Text>
-                        <Text style={{width: 290, fontFamily: 'TitilliumWeb_300Light_Italic', marginTop: 5}}>by {nomeUser}</Text>
+                        {/* <Text style={{width: 290, fontFamily: 'TitilliumWeb_300Light_Italic', marginTop: 5}}>by {nomeUser}</Text> */}
+                        <Text style={{width: 290, fontFamily: 'TitilliumWeb_300Light_Italic', marginTop: 5}}>by Pedro Dias</Text>
 
                     </View>
                     
@@ -115,6 +144,7 @@ const ItemPost = (posts) => {
                             <TouchableOpacity 
                             key={id}
                             onPress={(e) => {likes(e, id)}}
+                            // onPress={(e) => {listarCurtidas(id)}}
                             >
 
                                 <Icon

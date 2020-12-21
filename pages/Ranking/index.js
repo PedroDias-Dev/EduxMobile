@@ -1,12 +1,70 @@
 // PROJETO EDUX
 // 11 E 12/2020
-// TODOS
+// PEDRO
 
 import React, {useEffect, useState} from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity, Button, Alert } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import TopBar from '../../components/TopBar';
+import  jwt_decode  from 'jwt-decode';
+
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 const Home = ({navigation}) => {
+    //PROCESSAMENTO DE TOKEN
+    let token = AsyncStorage
+        .getItem('@jwt')
+        .then((value) => {
+            let IdUsuario = jwt_decode(value).id;
+
+            let Nome = jwt_decode(value).nameid;
+            let Email = jwt_decode(value).email;
+            let Role = jwt_decode(value).role;
+
+            setIdUsuario(IdUsuario);
+            // console.log(idUsuario)
+
+            setNome(Nome);
+            setEmail(Email);
+            setRole(Role);
+
+            listarConquistas(idUsuario)
+    });
+        
+    
+    //
+    const [nome, setNome] = useState('')
+    const [email, setEmail] = useState('')
+    const [role, setRole] = useState('')
+
+    const [idUsuario, setIdUsuario] = useState('');
+
+    const [postagensTotais, setPostagensTotais] = useState('');
+    const [curtidasTotais, setCurtidasTotais] = useState('');
+    const [conquistasTotais, setConquistasTotais] = useState('');
+    const [conquistasOcultas, setConquistasOcultas] = useState('');
+
+    const listarConquistas = (id) =>{
+        fetch('http://192.168.15.7:55718/api/Usuario/' + id, {
+                method : 'GET'
+            })
+            .then(response => response.json())
+            .then(dados => {
+                // console.log(dados);
+
+                setPostagensTotais(dados.postagensTotais);
+                setCurtidasTotais(dados.curtidasTotais);
+
+                setConquistasTotais(dados.conquistasTotais);
+                setConquistasOcultas(dados.conquistasOcultas);
+            })
+            .catch(err => console.log(err))
+    };
+    
+    useEffect(() => {
+        // listarConquistas();
+        // token();
+    }, []);
     
     const styles = StyleSheet.create({
         container: {
@@ -64,8 +122,8 @@ const Home = ({navigation}) => {
             backgroundColor: '#9200D6' , 
             borderRadius: 90,
 			padding: 20,
-			paddingLeft: 40,
-			paddingRight: 40,
+			paddingLeft: 29,
+			paddingRight: 29,
 			alignItems: 'center'
 			
         },
@@ -73,17 +131,26 @@ const Home = ({navigation}) => {
             fontSize: 30, 
             fontFamily: 'TitilliumWeb_900Black',
             color: 'white',
-            marginLeft: 8
+            marginLeft: 5
         },
         bottomText : {
-            width: 65, 
+            width: 67, 
             color: 'white',
             fontFamily: 'TitilliumWeb_400Regular',
+            marginLeft: 15,
 			marginBottom: 8,
 			alignItems: 'center'
         }
 
       });
+
+
+      //PROCESSAMENTO DO TOKEN JWT
+    
+      //
+
+
+
     return(
         <View>
             <TopBar navigation={navigation} />
@@ -97,8 +164,8 @@ const Home = ({navigation}) => {
                     {/* <Image source="https://avatars2.githubusercontent.com/u/61596627?s=460&u=a732711476392ccc25786fb308203dcf21e85ed5&v=4" style={{width:60, height:60, borderRadius:30 }} /> */}
                     
                     <View style={{alignSelf: 'center', padding: 9, marginRight: 15}}>
-                        <Text style={{fontFamily: 'TitilliumWeb_700Bold', color: 'white'}}>Pedro Dias</Text>
-                        <Text style={{fontSize: 10, fontFamily: 'TitilliumWeb_400Regular', color: 'white'}}>2 - Desenvolvimento de Sistemas</Text>
+                        <Text style={{fontFamily: 'TitilliumWeb_700Bold', color: 'white'}}>{nome}</Text>
+                        <Text style={{fontSize: 10, fontFamily: 'TitilliumWeb_400Regular', color: 'white'}}>{email}</Text>
                     </View>
                 </View>
             </View>
@@ -107,30 +174,30 @@ const Home = ({navigation}) => {
                 <View style={{alignSelf: 'center', alignItems: 'center'}}>
                     <View style={[styles.ranking, {backgroundColor: '#00D65F'}]}>
                         <Text style={styles.number}>3º</Text>
-                        <Text style={{color: 'white'}}>34</Text>
-                        <Text style={styles.bottomText}>Objetivos concluidos</Text>
+                        <Text style={{color: 'white'}}>{conquistasTotais}</Text>
+                        <Text style={styles.bottomText}>Conquistas Totais</Text>
                     </View>
                 </View>
 
                 <View style={{alignSelf: 'center', flexDirection: 'row', }}>
                     <View style={[styles.ranking, {marginRight: 70, backgroundColor: '#00C2EE'}]}>
-                        <Text style={styles.number}>1º</Text>
-                        <Text style={{color: 'white'}}>17</Text>
+                        <Text style={[styles.number, {marginLeft: 1}]}>{postagensTotais}</Text>
+                        {/* <Text style={{color: 'white'}}>{postagensTotais}</Text> */}
                         <Text style={styles.bottomText}>Postagens feitas</Text>
                     </View>
 
                     <View style={[styles.ranking, {backgroundColor: '#9200D6'}]}>
-                        <Text style={styles.number}>5º</Text>
-                        <Text style={{color: 'white'}}>20</Text>
-                        <Text style={styles.bottomText}>Desafios concluidos</Text>
+                        <Text style={[styles.number, {marginLeft: 1}]}>{curtidasTotais}</Text>
+                        {/* <Text style={{color: 'white'}}></Text> */}
+                        <Text style={styles.bottomText}>Curtidas Totais</Text>
                     </View>
                 </View>
 
                 <View style={{alignSelf: 'center'}}>
                     <View style={[styles.ranking, {backgroundColor: '#FF271C'}]}>
                         <Text style={styles.number}>8º</Text>
-                        <Text style={{color: 'white'}}>3</Text>
-                        <Text style={styles.bottomText}>Notas máximas</Text>
+                        <Text style={{color: 'white'}}>{conquistasOcultas}</Text>
+                        <Text style={styles.bottomText}>Conquistas Ocultas</Text>
                     </View>
                 </View>
             </View>

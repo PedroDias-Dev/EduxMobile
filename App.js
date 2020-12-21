@@ -86,6 +86,7 @@ export default function App() {
     return (
       <NavigationContainer>
         <Stack.Navigator screenOptions={{ headerShown : false }}>
+          {/* <Stack.Screen name="Postagens" component={Postagens} /> */}
           <Stack.Screen name="Login" component={Login} />
           <Stack.Screen name="Autenticado" component={Autenticado} />
         </Stack.Navigator>

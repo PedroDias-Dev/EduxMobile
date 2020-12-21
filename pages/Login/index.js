@@ -9,9 +9,10 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Login = ( {navigation} ) => {
     // let url = 'http://localhost:55718/api/Login';
-    let url = 'https://5f7f873fd6aabe00166f06be.mockapi.io/nyous/edux'
+    // let url = 'https://5f7f873fd6aabe00166f06be.mockapi.io/nyous/edux'
 
-    // let url = 'http://192.168.0.132:55718/api/Login';
+    let url = 'http://192.168.15.7:55718/api/Login';
+    // let url = 'http://localhost:5000/api/Login';
 
     const [email, setEmail] = useState('');
     const [senha, setSenha] = useState('');
@@ -40,17 +41,17 @@ const Login = ( {navigation} ) => {
         })
         .then(response => response.json())
         .then(data => {
-            console.log(data.token);
-            // if(data.status != 404){
+            // console.log(data.token);
+            if(data.status != 404){
                 alert('Seja bem vindx ao EduX!');
                 // console.log(data);
                 
                 salvar(data.token);
                 navigation.push('Autenticado');
-            // }else{
-            //     alert('Email ou senha inválidos! :( ');
+            }else{
+                alert('Email ou senha inválidos! :( ');
             
-        })
+        }})
 
     }
 

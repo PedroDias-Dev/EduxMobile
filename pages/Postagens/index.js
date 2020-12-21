@@ -10,15 +10,21 @@ import TopBar from '../../components/TopBar';
 
 import * as ImagePicker from 'expo-image-picker';
 
+import  jwt_decode  from 'jwt-decode';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 const Postagens = ( {navigation} ) => {
-    //let url = 'http://localhost:57332'
+    // let url = 'http://localhost:5000/api/Dica'
+    let url = 'http://192.168.15.7:55718/api/Dica'
     // let url = 'https://5f7f873fd6aabe00166f06be.mockapi.io/nyous/edux'
 
-    const [ id, setId] = useState(0);
+    const [ idDica, setIdDica] = useState(0);
+    const [ idUsuario, setIdUsuario] = useState(0);
+
     const [nome, setNome] = useState('');
     const [link, setLink] = useState('');
     const [urlImagem, setUrlImagem] = useState('');
-    const [descricao, setDescricao] = useState('');
+    const [texto, setTexto] = useState('');
     const [nomeUser, setNomeUser] = useState('');
     const [posts, setPost] = useState([]);
     const [cursoId, setCursoId] = useState('');
@@ -28,8 +34,12 @@ const Postagens = ( {navigation} ) => {
     const [show, setShow] = useState(false);
     const target = useRef(null);
 
+    //CONQUISTAS
+    const [postagensTotais, setPostagensTotais] = useState('');
+    const [curtidasTotais, setCurtidasTotais] = useState('');
+
     //IMAGE
-    const [image, setImage] = useState(null);
+    const [image, setImage] = useState('');
 
     const pickImage = async () => {
         (async () => {
@@ -49,38 +59,24 @@ const Postagens = ( {navigation} ) => {
         });
     
         console.log(result);
+        setImage(result.uri);
+        console.log(image)
+
+        uploadFile(result)
     
         if (!result.cancelled) {
-          setImage(result.uri);
-          console.log(result.uri)
+
+          
+
+          
+
+          
         }
     };
 
-    //NOME DE USUARIO
-    const token = localStorage.getItem('token-edux');
-
-    const SetNomeUser = () =>{
-        //const token = localStorage.getItem('token-edux');
-        setNomeUser((jwt_decode(token).nameid));
-
-        console.log(nomeUser);
-    }
-
-
     useEffect(() => {
         listarPosts();
-        
     }, []);
-
-    const listarCursos = () => {
-        fetch('http://localhost:62602/api/Cursos')
-            .then(response => response.json())
-            .then(data => {
-                setCursos(data)
-                limparCampos();
-            })
-            .catch(err => console.error(err));
-    }
 
     const listarPosts = () => {
         fetch(url, {
@@ -88,29 +84,43 @@ const Postagens = ( {navigation} ) => {
         })
         .then(response => response.json())
         .then(dados => {
-          setPost(dados);
+          setPost(dados.data);
 
           console.log(dados);
         })
         .catch(err => console.log(err))
-      }
+    }
+
+
 
     const limparCampos = () => {
-        setId(0);
+        setIdDica(0);
         setNome('');
         setLink('');
         setUrlImagem('');
-        setDescricao('');
+        // setDescricao('');
+        setTexto("")
         setNomeUser('');
         setCursoId(0);
         setImage(null);
     }
 
+    let token = AsyncStorage
+        .getItem('@jwt')
+        .then((value) => {
+            let IdUsuario = jwt_decode(value).id;
+            let Nome = jwt_decode(value).nameid;
+
+            setIdUsuario(IdUsuario);
+            setNomeUser(Nome);
+
+    })
+
     const salvar = (event) => {
         event.preventDefault();
 
-        SetNomeUser();
-        if (descricao === ""){
+        // SetNomeUser();
+        if (texto === ""){
             return(
                 alert("Não há texto na postagem...")
             )
@@ -120,26 +130,54 @@ const Postagens = ( {navigation} ) => {
                 nome : nome,
                 urlImagem: urlImagem,
                 link : link,
-                descricao : descricao,
+                texto : texto,
                 nomeUser: nomeUser,
                 curtidas: 0
             }
     
-            let method = (id === 0 ? 'POST' : 'PUT');
-            let urlRequest = (id === 0 ? `${url}` : `${url}/${id}`);
+            let method = (idDica === 0 ? 'POST' : 'PUT');
+            let urlRequest = (idDica === 0 ? `${url}` : `${url}/${idDica}`);
     
             fetch(urlRequest, {
                 method : method,
                 body : JSON.stringify(post),
                 headers : {
-                    'content-type' : 'application/json',
-                    'authorization' : 'Bearer' + localStorage.getItem('token-edux')
+                    'content-type' : 'application/json'
+                    // 'authorization' : 'Bearer' + localStorage.getItem('token-edux')
                 }
             })
             .then(response => response.json())
             .then(dados => {
                 alert('Post salvo com sucesso!');
+
+                fetch('http://localhost:5000/api/Usuario/' + idUsuario, {
+                method : 'GET'
+                })
+                .then(response => response.json())
+                .then(dados => {
+                    let conquistas = {
+                        idUsuario: idUsuario,
+                        postagensTotais: Number(dados.postagensTotais) + 1,
+                        curtidasTotais: dados.curtidasTotais
+                    }
     
+                    fetch(`http://localhost:5000/api/Usuario/${idUsuario}`, {
+                        method : 'PATCH',
+                        body : JSON.stringify(conquistas),
+                        headers : {
+                            'content-type' : 'application/json'
+                        }
+                    })
+                    .then(response => response.json())
+                    .then(dados => {
+                        console.log(dados)
+                    });
+
+                })
+                .catch(err => console.log(err))
+
+                
+                
                 listarPosts();
                 // setImage(null);
                 // setDescricao("");
@@ -150,9 +188,60 @@ const Postagens = ( {navigation} ) => {
         
     }
 
+
     const renderItem = ({ item }) => (
-        <ItemPost descricao={item.descricao} imagem={item.urlImagem} curtidas={item.curtidas} data={item.data} id={item.id} nomeUser={item.nomeUser} />
-      );
+        <ItemPost 
+        descricao={item.texto} 
+        imagem={item.urlImagem} 
+        curtidas={ Object.keys(item.curtida).length }
+        data={item.data} 
+        id={item.idDica} 
+        nomeUser={item.nomeUser} 
+        idUsuario={idUsuario}
+        />
+    );
+
+    const uploadFile = async (imagem) => {
+        // event.preventDefault();
+
+        let fileToUpload = imagem;
+
+        if(fileToUpload != null){
+            const formdata = new FormData();
+
+            formdata.append("arquivo", {
+                name: 'image.' + fileToUpload.uri.split('.').pop(),
+                type: 'image/' + fileToUpload.uri.split('.').pop(),
+                uri:
+                    Platform.OS === "android" ? fileToUpload.uri : fileToUpload.uri.replace("file://", "")
+            });
+
+            console.log(formdata)
+
+
+            fetch('http://192.168.15.7:55718/api/Upload', {
+                method : 'POST',
+                body : formdata,
+                headers: {
+                    'content-type': 'multipart/form-data'
+                }
+                
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('retorno' + data)
+
+                setUrlImagem(data.url);
+                console.log('Url: ' + urlImagem)
+
+            })
+            .catch(err => console.log('passo mas ta errado ae' + err))
+        }else{
+            console.log('erro total meu pç')
+        }
+        
+
+    }
 
       const styles = StyleSheet.create({
         container: {
@@ -201,45 +290,40 @@ const Postagens = ( {navigation} ) => {
     //   const {posts} = this.state;
 
     return(
-        <View >
+        <View>
             <View style={{backgroundColor: 'white'}}>
                 <TopBar navigation={navigation} />
                 <Text style={{fontSize: 40, alignSelf: 'center', marginTop: 10, fontFamily: 'TitilliumWeb_700Bold', color: '#9200D6'}}>POSTS</Text>
-
                 <TextInput
                     style={[styles.input, {color: '#BEBFBF'}]}
-                    onChangeText={text => setDescricao(text)}
+                    onChangeText={text => setTexto(text)}
                     placeholder="Qual sua dica para hoje?"
                     placeholderTextColor="#BEBFBF" 
-
                 />
-
                 <View style={{flexDirection: 'row', justifyContent: 'space-evenly'}}>
                     <TouchableOpacity 
                         style={[styles.button, {backgroundColor: 'gray'}]}
-                        onPress={pickImage}
+                        onPress={pickImage}   
                     >
                         <Text style={[styles.textButton, ]}>Escolher imagem</Text>
                     </TouchableOpacity>
-
                     <TouchableOpacity 
                         style={[styles.button, {backgroundColor: '#00D65F'}]}
                         onPress={salvar}>
                         <Text style={[styles.textButton, {fontFamily: 'TitilliumWeb_700Bold'}]}>POSTAR</Text>
                     </TouchableOpacity>
                 </View>
-                <View style={{backgroundColor: 'white', justifyContent: "center", alignItems: 'center', }}>
-                    {image && <Image source={{ uri: image }} style={{ width: 200, height: 200, margin: 15, borderRadius: 3 }} />}
+                <View style={{backgroundColor: 'white', justifyContent: 'center', alignItems: 'center' }}>
+                    { image ? <Image source={{ uri: image }} style={{ width: 200, height: 200, margin: 15, borderRadius: 3 }}/> : [] }
                 </View>
             </View>
-            
             <FlatList
                 data={posts}
                 renderItem={renderItem}
                 keyExtractor={item => item.id}
+                key={index => index}
                 style={{backgroundColor: 'white', height: '64%'}}
             />
-            
         </View>
 
     );
